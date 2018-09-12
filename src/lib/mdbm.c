@@ -4162,12 +4162,19 @@ mdbm_open_inner(const char *filename, int flags, int mode, int pagesize, int dbs
     db->db_sys_pagesize = db_sys_pagesize;
     /*init_locks(db); */
 
-    db->db_filename[0] = 0;
+// Code candidate for removal
+/*    db->db_filename[0] = 0;
     if (filename[0] == '/') {
-        strncat(db->db_filename,filename,sizeof(db->db_filename)-1);
+	int db_filename_len = strlen(db->db_filename);
+	strncat(db->db_filename, filename, MAXPATHLEN-db_filename_len);
     } else {
-        strncat(db->db_filename,pathname,sizeof(db->db_filename)-1);
+	int db_filename_len = strlen(db->db_filename);
+	strncat(db->db_filename, pathname, MAXPATHLEN-db_filename_len);
     }
+*/
+// replacement code
+    strcpy(db->db_filename, pathname);
+
     db->m_stat_cb = 0;
     db->m_stat_cb_flags = 0;
     db->m_stat_cb_user = 0;

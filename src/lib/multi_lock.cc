@@ -1754,9 +1754,9 @@ int PthrLock::getFilename(const char* dbname, char* lockname, int maxlen) {
   if (maxlen < llen) {
     return -llen;
   }
-  strncpy(lockname, prefix, plen);
-  strncpy(lockname+plen, dbname, dblen);
-  strncpy(lockname+plen+dblen, suffix, slen);
+  strncpy(lockname, prefix, llen);
+  strncpy(lockname+plen, dbname, llen-plen);
+  strncpy(lockname+plen+dblen, suffix, llen-plen-dblen);
   lockname[llen-1] = 0; /* trailing null */
   return llen;
 }
