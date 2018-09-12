@@ -15,8 +15,12 @@ SONAME=-Wl,-soname,$(LIBNAME).$(LIBVER)
 #-Wl,-rpath,$(DEFAULT_LIB_INSTALL_PATH)
 
 # TODO: Fix this to not be rh specific
-INCDIR += -I/usr/lib/jvm/java/include -I/usr/lib/jvm/java/include/linux
-LIB_BUILD_FLAGS +=  -L/usr/lib/jvm/java/jre/lib/amd64/ -ljsig $(LIBRT)  -L$(TOPDIR)/src/lib/$(OBJDIR)  -lmdbm -Wall  -fno-strict-aliasing -Wno-unused-function -D_FILE_OFFSET_BITS=64
+#INCDIR += -I/usr/lib/jvm/java/include -I/usr/lib/jvm/java/include/linux
+#JAVALIBDIR += -L/usr/lib/jvm/java/jre/lib/amd64/
+# IF in ArchLinux, use these lines instead:
+INCDIR += -I/usr/lib/jvm/java-10-jdk/include/ -I/usr/lib/jvm/java-10-jdk/include/linux
+JAVALIBDIR += -L/usr/lib/jvm/java-10-jdk/lib/
+LIB_BUILD_FLAGS += $(JAVALIBDIR) -ljsig $(LIBRT)  -L$(TOPDIR)/src/lib/$(OBJDIR)  -lmdbm -Wall  -fno-strict-aliasing -Wno-unused-function -D_FILE_OFFSET_BITS=64
 
 LIB_DEST=$(PREFIX)/lib$(ARCH_SUFFIX)
 ifeq ($(SET_RPATH),1)
@@ -43,4 +47,4 @@ install:: default-make-target
 clean :: clean-objs
 
 maven: 
-	LD_LIBRARY_PATH=../lib/object/ mvn -B clean verify -Djava.awt.headless=true -DfailIfNoTests=false  -DnativeDir=../lib/object/ -DlibDir=object/
+	LD_LIBRARY_PATH=../lib/object/ mvn -B clean verify -Dosgi.requiredJavaVersion=1.8 -Djava.awt.headless=true -DfailIfNoTests=false  -DnativeDir=../lib/object/ -DlibDir=object/
