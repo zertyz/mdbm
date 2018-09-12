@@ -19,7 +19,7 @@ public abstract class DeallocatingClosedBase extends ClosedBaseChecked {
     protected volatile long pointer = 0L;
     protected volatile Deallocator deallocator;
     @SuppressWarnings("restriction")
-    protected volatile sun.misc.Cleaner cleaner;
+    protected volatile java.lang.ref.Cleaner cleaner;
 
     @SuppressWarnings("restriction")
     protected DeallocatingClosedBase(long pointer, Dealloc destructor) {
@@ -27,7 +27,8 @@ public abstract class DeallocatingClosedBase extends ClosedBaseChecked {
         this.pointer = pointer;
         if (null != destructor) {
             this.deallocator = new Deallocator(pointer, destructor);
-            this.cleaner = sun.misc.Cleaner.create(this, deallocator);
+            this.cleaner = java.lang.ref.Cleaner.create();
+            this.cleaner.register(this, deallocator);
         } else {
             this.deallocator = null;
             this.cleaner = null;

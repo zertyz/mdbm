@@ -2,9 +2,6 @@
 /* Licensed under the terms of the 3-Clause BSD license. See LICENSE file in the project root for details. */
 package com.yahoo.db.mdbm.internal;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yahoo.db.mdbm.MdbmInterface;
