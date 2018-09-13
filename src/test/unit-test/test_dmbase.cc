@@ -1950,8 +1950,13 @@ DataMgmtBaseTestSuite::FilledSinglePagedDbNonDefsAndShakeFuncPurgeG5()
     uint64_t size_post = mdbm_get_size(dbh);
     uint64_t count_post = mdbm_count_records(dbh);
 
+#ifdef __ARM_ARCH_7A__
+    fprintf(stderr, "MDBM SIZE went from %llu to %llu after %d entries (orig:%llu ent-prior:%llu post:%llu)\n", 
+        size_prior, size_post, refillAddCnt, count_orig, count_prior, count_post);
+#else
     fprintf(stderr, "MDBM SIZE went from %lu to %lu after %d entries (orig:%lu ent-prior:%lu post:%lu)\n", 
         size_prior, size_post, refillAddCnt, count_orig, count_prior, count_post);
+#endif
 
     // Should only be able to add twice the number of entries as first time
     // since verifyDefaultConfig performs mdbm_limit_size with twice the number of pages
