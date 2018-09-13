@@ -1169,7 +1169,7 @@ public:
             fprintf(OutputFilePtr, "Cat could not open [%s], %s\n", arg.c_str(), strerror(errno));
             return (1);
         }
-        int bytes = pread(fd, buf, bufLen-1, 0);
+        int bytes = pread(fd, buf, bufLen, 0);
         fprintf(OutputFilePtr, "[%s] %d bytes: \n", arg.c_str(), bytes);
         if (bytes<=0) {
             fprintf(OutputFilePtr, "<empty>\n");
@@ -1179,7 +1179,7 @@ public:
                 bytes = bufLen;
                 truncated = true;
             }
-            buf[bytes-1]='\0';
+            buf[bytes]='\0';
             fprintf(OutputFilePtr, "%s\n", buf);
             if (truncated) {
                 fprintf(OutputFilePtr, "<truncated>\n");
